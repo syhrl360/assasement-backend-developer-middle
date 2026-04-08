@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.middle.assessment</groupId>
-	<artifactId>account-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>account-service</name>
-	<description>account-service</description>
+	<artifactId>docker-account-service</artifactId>
+	<version>0.0.1</version>
+	<name>docker-account-service</name>
+	<description>docker-account-service</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -41,10 +41,15 @@
 			<version>4.0.1</version>
 		</dependency>
 
-				<dependency>
-					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-				</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>

@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.middle.assessment</groupId>
-	<artifactId>payment-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>payment-service</name>
+	<artifactId>docker-payment-service</artifactId>
+	<version>0.0.1</version>
+	<name>docker-payment-service</name>
 	<description>payment-service</description>
 	<url/>
 	<licenses>
@@ -41,10 +41,16 @@
 			<version>4.0.1</version>
 		</dependency>
 
-				<dependency>
-					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-				</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
