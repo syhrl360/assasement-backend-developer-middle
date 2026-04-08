@@ -8,10 +8,10 @@ import java.util.List;
 @Mapper
 public interface PaymentMapper {
 
-    @Select("SELECT * FROM payment_record WHERE user_id = #{userId}")
+    @Select("SELECT id as id, user_id as userId, order_id as orderId, name as name, bank_account as bankAccount, bank_name as bankName, repay_amount as repayAmount, admin_fee as adminFee, due_date as dueDate FROM payment_record WHERE user_id = #{userId}")
     PaymentRecord findByUserId(Long userId);
 
-    @Select("SELECT * FROM payment_record")
+    @Select("SELECT id as id, user_id as userId, order_id as orderId, name as name, bank_account as bankAccount, bank_name as bankName, repay_amount as repayAmount, admin_fee as adminFee, due_date as dueDate FROM payment_record")
     List<PaymentRecord> findAll();
 
     @Insert("INSERT INTO payment_record (user_id, order_id, name, bank_account, bank_name, repay_amount, admin_fee, due_date) VALUES (#{userId}, #{orderId}, #{name}, #{bankAccount}, #{bankName}, #{repayAmount}, #{adminFee}, DATE_ADD(NOW(), INTERVAL 30 DAY))")

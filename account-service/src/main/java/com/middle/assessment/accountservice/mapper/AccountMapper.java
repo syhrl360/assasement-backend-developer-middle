@@ -8,10 +8,10 @@ import java.util.List;
 @Mapper
 public interface AccountMapper {
 
-    @Select("SELECT * FROM user_account WHERE user_id = #{userId}")
+    @Select("SELECT id as id, user_id as userId, name as name, bank_account as bankAccount, bank_name as bankName, balance as balance FROM user_account WHERE user_id = #{userId}")
     UserAccount findByUserId(Long userId);
 
-    @Select("SELECT * FROM user_account")
+    @Select("SELECT id as id, user_id as userId, name as name, bank_account as bankAccount, bank_name as bankName, balance as balance FROM user_account")
     List<UserAccount> findAll();
 
     @Insert("INSERT INTO user_account (user_id, name, bank_account, bank_name, balance) VALUES (#{userId}, #{name}, #{bankAccount}, #{bankName}, #{balance})")

@@ -8,10 +8,10 @@ import java.util.List;
 @Mapper
 public interface LoanMapper {
 
-    @Select("SELECT * FROM loan_record WHERE user_id = #{userId}")
+    @Select("SELECT id as id, user_id as userId, order_id as orderId, name as name, loan_amount as loanAmount, loan_date as loanDate, description as description FROM loan_record WHERE user_id = #{userId}")
     LoanRecord findByUserId(Long userId);
 
-    @Select("SELECT * FROM loan_record")
+    @Select("SELECT id as id, user_id as userId, order_id as orderId, name as name, loan_amount as loanAmount, loan_date as loanDate, description as description FROM loan_record")
     List<LoanRecord> findAll();
 
     @Insert("INSERT INTO loan_record (user_id, order_id, name, loan_amount, loan_date, description) VALUES (#{userId}, #{orderId}, #{name}, #{loanAmount}, CURRENT_TIMESTAMP(), #{description})")
