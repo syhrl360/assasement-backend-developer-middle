@@ -25,7 +25,7 @@ public class AccountController {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "400", description = "user account not exists")
     })
-    @GetMapping("/{id}")
+    @GetMapping("/findByUserId/{id}")
     public UserAccount findByUserId(@PathVariable Long userId) {
         return accountService.findByUserId(userId);
     }
@@ -56,7 +56,7 @@ public class AccountController {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "400", description = "error when updating user account data")
     })
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public void update(@PathVariable Long id, @RequestBody UserAccount userAccount) {
         userAccount.setId(id);
         accountService.update(userAccount);

@@ -1,6 +1,8 @@
 package com.middle.assessment.loanservice.service;
 
+import com.middle.assessment.loanservice.client.PaymentServiceClient;
 import com.middle.assessment.loanservice.dto.LoanRecord;
+import com.middle.assessment.loanservice.dto.PaymentRecord;
 import com.middle.assessment.loanservice.mapper.LoanMapper;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +13,12 @@ import java.util.List;
 public class LoanService {
     private final LoanMapper loanMapper;
 
-    public LoanService(LoanMapper loanMapper){
+    private PaymentServiceClient paymentServiceClient;
+
+    public LoanService(LoanMapper loanMapper,
+                       PaymentServiceClient paymentServiceClient){
         this.loanMapper = loanMapper;
+        this.paymentServiceClient = paymentServiceClient;
     }
 
     public LoanRecord findByUserId(Long userId) {
@@ -24,6 +30,15 @@ public class LoanService {
     }
 
     public void insert(LoanRecord loanRecord) {
+        PaymentRecord paymentRecord = new PaymentRecord();
+        paymentRecord.setUserId(loanRecord.getUserId());
+        paymentRecord.setOrderId(loanRecord.getOrderId());
+        paymentRecord.setName(loanRecord.getName());
+        paymentRecord.setBankAccount("222299900");
+        paymentRecord.setBankName("BCA");
+        paymentRecord.setRepayAmount(loanRecord.getLoanAmount()+5000);
+        paymentRecord.setAdminFee(5000);
+        paymentServiceClient.insert(paymentRecord);
         loanMapper.insert(loanRecord);
     }
 

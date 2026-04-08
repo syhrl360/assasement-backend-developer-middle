@@ -1,6 +1,8 @@
 package com.middle.assessment.paymentservice.service;
 
+import com.middle.assessment.paymentservice.client.AccountServiceClient;
 import com.middle.assessment.paymentservice.dto.PaymentRecord;
+import com.middle.assessment.paymentservice.dto.UserAccount;
 import com.middle.assessment.paymentservice.mapper.PaymentMapper;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +14,12 @@ public class PaymentService {
 
     private final PaymentMapper paymentMapper;
 
-    public PaymentService(PaymentMapper paymentMapper) {
+    private final AccountServiceClient accountServiceClient;
+
+    public PaymentService(PaymentMapper paymentMapper,
+                          AccountServiceClient accountServiceClient) {
         this.paymentMapper = paymentMapper;
+        this.accountServiceClient = accountServiceClient;
     }
 
     public PaymentRecord findByUserId(Long userId) {
@@ -25,6 +31,11 @@ public class PaymentService {
     }
 
     public void insert(PaymentRecord paymentRecord) {
+        UserAccount userAccount = new UserAccount();
+        userAccount = accountServiceClient.findByUserId(paymentRecord.getUserId());
+        userAccount.setBalance(userAccount.getBalance() + paymentRecord.getRepayAmount() - 5000);
+        accountServiceClient.update(userAccount.getId(), userAccount);
+        
         paymentMapper.insert(paymentRecord);
     }
 
