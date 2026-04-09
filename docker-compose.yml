@@ -8,6 +8,8 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             MYSQL_DATABASES: ${MYSQL_DATABASE}
+        volumes:
+            - db_data:/var/lib/mysql
         networks:
             - spring-cloud-network
         healthcheck:
@@ -44,8 +46,7 @@ services:
                 condition: service_healthy    
         networks:
             - spring-cloud-network
-        volumes:
-            - db_data:/var/lib/mysql
+        
 
     loan-service:
         container_name: loan-service
