@@ -27,7 +27,7 @@ public class LoanController {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "400", description = "if loan record not exists")
     })
-    @GetMapping("/{id}")
+    @GetMapping("/findByUserId/{userId}")
     public LoanRecord findByUserId(@PathVariable Long userId) {
         return loanService.findByUserId(userId);
     }
