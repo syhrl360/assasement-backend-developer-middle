@@ -25,7 +25,7 @@ public class AccountController {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "400", description = "user account not exists")
     })
-    @GetMapping("/findByUserId/{id}")
+    @GetMapping("/findByUserId/{userId}")
     public UserAccount findByUserId(@PathVariable Long userId) {
         return accountService.findByUserId(userId);
     }
