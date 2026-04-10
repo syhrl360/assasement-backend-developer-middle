@@ -25,7 +25,7 @@ public class PaymentController {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "400", description = "payment record not exists")
     })
-    @GetMapping("/{id}")
+    @GetMapping("/findByUserId/{userId}")
     public PaymentRecord findByUserId(@PathVariable Long userId) {
         return paymentService.findByUserId(userId);
     }
