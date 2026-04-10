@@ -1,8 +1,10 @@
 package com.middle.assessment.loanservice.service;
 
+import com.middle.assessment.loanservice.client.AccountServiceClient;
 import com.middle.assessment.loanservice.client.PaymentServiceClient;
 import com.middle.assessment.loanservice.dto.LoanRecord;
 import com.middle.assessment.loanservice.dto.PaymentRecord;
+import com.middle.assessment.loanservice.dto.UserAccount;
 import com.middle.assessment.loanservice.mapper.LoanMapper;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +15,15 @@ import java.util.List;
 public class LoanService {
     private final LoanMapper loanMapper;
 
-    private PaymentServiceClient paymentServiceClient;
+    private final PaymentServiceClient paymentServiceClient;
+    private final AccountServiceClient accountServiceClient;
 
     public LoanService(LoanMapper loanMapper,
-                       PaymentServiceClient paymentServiceClient){
+                       PaymentServiceClient paymentServiceClient,
+                       AccountServiceClient accountServiceClient){
         this.loanMapper = loanMapper;
         this.paymentServiceClient = paymentServiceClient;
+        this.accountServiceClient = accountServiceClient;
     }
 
     public LoanRecord findByUserId(Long userId) {
@@ -30,16 +35,20 @@ public class LoanService {
     }
 
     public void insert(LoanRecord loanRecord) {
-        PaymentRecord paymentRecord = new PaymentRecord();
-        paymentRecord.setUserId(loanRecord.getUserId());
-        paymentRecord.setOrderId(loanRecord.getOrderId());
-        paymentRecord.setName(loanRecord.getName());
-        paymentRecord.setBankAccount("222299900");
-        paymentRecord.setBankName("BCA");
-        paymentRecord.setRepayAmount(loanRecord.getLoanAmount()+5000);
-        paymentRecord.setAdminFee(5000);
-        paymentServiceClient.insert(paymentRecord);
-        loanMapper.insert(loanRecord);
+        UserAccount userAccount = accountServiceClient.findByUserId(loanRecord.getUserId());
+        if (userAccount != null) {
+            PaymentRecord paymentRecord = new PaymentRecord();
+            paymentRecord.setUserId(userAccount.getUserId());
+            paymentRecord.setOrderId(loanRecord.getOrderId());
+            paymentRecord.setName(userAccount.getName());
+            paymentRecord.setBankAccount(userAccount.getBankAccount());
+            paymentRecord.setBankName(userAccount.getBankName());
+            paymentRecord.setRepayAmount(loanRecord.getLoanAmount()+5000);
+            paymentRecord.setAdminFee(5000);
+            paymentServiceClient.insert(paymentRecord);
+            loanMapper.insert(loanRecord);
+        }
+
     }
 
     public void update(LoanRecord loanRecord) {
