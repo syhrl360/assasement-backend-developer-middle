@@ -5,25 +5,36 @@ import com.middle.assessment.loanservice.client.PaymentServiceClient;
 import com.middle.assessment.loanservice.dto.LoanRecord;
 import com.middle.assessment.loanservice.dto.PaymentRecord;
 import com.middle.assessment.loanservice.dto.UserAccount;
+import com.middle.assessment.loanservice.kafka.MessageProducer;
+import com.middle.assessment.loanservice.kafka.service.KafkaService;
 import com.middle.assessment.loanservice.mapper.LoanMapper;
 import org.springframework.stereotype.Service;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
 public class LoanService {
-    private final LoanMapper loanMapper;
 
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    private final LoanMapper loanMapper;
     private final PaymentServiceClient paymentServiceClient;
     private final AccountServiceClient accountServiceClient;
 
+    private final KafkaService kafkaService;
+
+
     public LoanService(LoanMapper loanMapper,
                        PaymentServiceClient paymentServiceClient,
-                       AccountServiceClient accountServiceClient){
+                       AccountServiceClient accountServiceClient,
+                       KafkaService kafkaService){
         this.loanMapper = loanMapper;
         this.paymentServiceClient = paymentServiceClient;
         this.accountServiceClient = accountServiceClient;
+        this.kafkaService = kafkaService;
     }
 
     public LoanRecord findByUserId(Long userId) {
@@ -37,16 +48,9 @@ public class LoanService {
     public void insert(LoanRecord loanRecord) {
         UserAccount userAccount = accountServiceClient.findByUserId(loanRecord.getUserId());
         if (userAccount != null) {
-            PaymentRecord paymentRecord = new PaymentRecord();
-            paymentRecord.setUserId(userAccount.getUserId());
-            paymentRecord.setOrderId(loanRecord.getOrderId());
-            paymentRecord.setName(userAccount.getName());
-            paymentRecord.setBankAccount(userAccount.getBankAccount());
-            paymentRecord.setBankName(userAccount.getBankName());
-            paymentRecord.setRepayAmount(loanRecord.getLoanAmount()+5000);
-            paymentRecord.setAdminFee(5000);
-            paymentServiceClient.insert(paymentRecord);
             loanMapper.insert(loanRecord);
+            String loanRecordJSONString = objectMapper.writeValueAsString(loanRecord);
+            kafkaService.sendMessage(loanRecordJSONString);
         }
 
     }
