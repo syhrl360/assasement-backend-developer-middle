@@ -36,4 +36,13 @@ CREATE TABLE IF NOT EXISTS `user_account` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
+CREATE TABLE IF NOT EXISTS `kafka_log` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `service_receiver` varchar(50)  NULL,
+  `topic_name` varchar(50) NULL,
+  `group_id` varchar(50) NULL
+  `content` MEDIUMTEXT  NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 INSERT INTO `user_account` (`user_id`, `name`, `bank_account`, `bank_name`, `balance`) VALUES (1, 'Alpha', '1122334455', 'MANDIRI', 2200000), (2, 'Bravo', '225522', 'BCA', 2500000);
