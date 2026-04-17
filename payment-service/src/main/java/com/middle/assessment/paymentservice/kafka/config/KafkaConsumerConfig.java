@@ -36,11 +36,6 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> loanKafkaListenerContainerFactory(){
-        return kafkaListenerContainerFactory("loan_group_id");
-    }
-
-    @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> paymentKafkaListenerContainerFactory(){
         return kafkaListenerContainerFactory("payment_group_id");
     }

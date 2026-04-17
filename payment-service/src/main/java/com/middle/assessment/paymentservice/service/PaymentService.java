@@ -31,10 +31,6 @@ public class PaymentService {
     }
 
     public void insert(PaymentRecord paymentRecord) {
-        UserAccount userAccount = accountServiceClient.findByUserId(paymentRecord.getUserId());
-        userAccount.setBalance(userAccount.getBalance() + paymentRecord.getRepayAmount() - 5000);
-        accountServiceClient.update(userAccount.getId(), userAccount);
-        
         paymentMapper.insert(paymentRecord);
     }
 

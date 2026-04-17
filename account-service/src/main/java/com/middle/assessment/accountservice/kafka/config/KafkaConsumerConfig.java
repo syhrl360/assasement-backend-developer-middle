@@ -40,8 +40,5 @@ public class KafkaConsumerConfig {
         return kafkaListenerContainerFactory("account_group_id");
     }
 
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> paymentKafkaListenerContainerFactory() {
-        return kafkaListenerContainerFactory("payment_group_id");
-    }
+
 }
