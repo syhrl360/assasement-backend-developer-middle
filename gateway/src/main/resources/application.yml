@@ -1,0 +1,30 @@
+server:
+  port: 9090
+
+eureka:
+  client:
+    service-url:
+      default: http://eureka-server:8769/eureka
+  instance:
+    preferIpAddress: true
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: loan-service
+          url: lb://LOAN-SERVICE
+          predicates:
+            - Path=/loanRecord/**
+
+        - id: payment-service
+          url: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/paymentRecord/**
+
+        - id: account-service
+          url: lb://ACCOUNT-SERVICE
+          predicates:
+            - Path=/userAccount/**
