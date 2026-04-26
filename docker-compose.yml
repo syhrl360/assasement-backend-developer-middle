@@ -61,6 +61,17 @@ services:
         networks:
             - spring-cloud-network
 
+    gateway:
+        container_name: gateway
+        build:
+            context: gateway
+            dockerfile: Dockerfile
+        image: gateway:0.0.1
+        ports:
+            - 9090:9090
+        networks:
+            - spring-cloud-network        
+
     account-service:
         container_name: account-service
         build:

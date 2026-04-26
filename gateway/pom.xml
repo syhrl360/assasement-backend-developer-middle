@@ -9,8 +9,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.practice</groupId>
-	<artifactId>gateway</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>docker-gateway</artifactId>
+	<version>0.0.1</version>
 	<name/>
 	<description/>
 	<url/>
