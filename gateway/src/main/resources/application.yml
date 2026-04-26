@@ -13,18 +13,21 @@ spring:
     name: gateway
   cloud:
     gateway:
-      routes:
-        - id: loan-service
-          url: lb://loan-service
-          predicates:
-            - Path=/loanRecord/**
+      server:
+        webmvc:
+          routes:
+            - id: loan-service
+              uri: lb://loan-service
+              predicates:
+                - Path=/loanRecord/**
 
-        - id: payment-service
-          url: lb://payment-service
-          predicates:
-            - Path=/paymentRecord/**
+            - id: payment-service
+              uri: lb://payment-service
+              predicates:
+                - Path=/paymentRecord/**
 
-        - id: account-service
-          url: lb://account-service
-          predicates:
-            - Path=/userAccount/**
+            - id: account-service
+              uri: lb://account-service
+              predicates:
+                - Path=/userAccount/**
+
