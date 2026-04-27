@@ -14,7 +14,7 @@ spring:
   cloud:
     gateway:
       server:
-        webmvc:
+        webflux:
           routes:
             - id: loan-service
               uri: lb://loan-service
